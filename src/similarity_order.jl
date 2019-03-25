@@ -11,7 +11,8 @@ adjusts the similarity order of the model. The function returns a new
      word embeddings with lessons for intrinsic and extrinsic evaluation\",
      2018](https://arxiv.org/pdf/1809.02094.pdf)
 """
-function similarity_order(wv::WordVectors{S,T,H}, alpha::T=T(-0.65)
+function similarity_order(wv::WordVectors{S,T,H},
+                          alpha::T=T(-0.65)
 	   ) where {S<:AbstractString, T<:Real, H<:Integer}
    n = length(wv.vocab)
    X = wv.vectors
