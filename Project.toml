@@ -1,0 +1,9 @@
+name = "EmbeddingsAnalysis"
+uuid = "827a7f00-4ef9-11e9-22c6-8dc9c6ee7bf4"
+authors = ["Corneliu Cofaru <cornel@oxoaresearch.com>"]
+version = "0.1.0"
+
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Word2Vec = "c64b6f0f-98cd-51d1-af78-58ae84944834"
