@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Processing methods",
     "category": "section",
-    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \\\"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\\\", 2018"
+    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018"
 },
 
 {
@@ -30,6 +30,14 @@ var documenterSearchIndex = {"docs": [
     "title": "Installation",
     "category": "section",
     "text": "Installation can be performed from either outside or inside Julia with:$ git clone https://github.com/zgornel/EmbeddingsAnalysis.jlandusing Pkg\nPkg.clone(\"https://github.com/zgornel/EmbeddingsAnalysis.jl\")respectively."
+},
+
+{
+    "location": "api/#Base.dump-Union{Tuple{H}, Tuple{T}, Tuple{S}, Tuple{IO,WordVectors{S,T,H}}} where H<:Integer where T<:Real where S<:AbstractString",
+    "page": "API Reference",
+    "title": "Base.dump",
+    "category": "method",
+    "text": "dump(wv::WordVectors, filename [;kind=:binary])\n\nWrites embeddings to disk.\n\nArguments\n\nwv::WordVectors the embeddings\nfilename::AbstractString the embeddings file name\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
 },
 
 {
