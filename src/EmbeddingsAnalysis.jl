@@ -1,9 +1,11 @@
 module EmbeddingsAnalysis
 
     using LinearAlgebra
+    using Statistics
     using Languages
     using Word2Vec
     using ConceptnetNumberbatch
+    using MultivariateStats
 
     import Base: dump
 
@@ -13,4 +15,6 @@ module EmbeddingsAnalysis
     include("dump.jl")
     include("conceptnet2wv.jl")
     include("similarity_order.jl")
+    include("pca_reduction.jl")
+
 end # module
