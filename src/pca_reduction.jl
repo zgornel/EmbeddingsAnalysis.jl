@@ -54,6 +54,7 @@ function _pca_postprocessing(X::AbstractMatrix{T}, rdim::Int=7) where {T<:Abstra
     m, n = size(X)
     rdim = clamp(rdim, 1, m)
     M = fit(PCA, X, pratio=1.0, mean=0)
+    M = __handle_pca_dimensions(M, m)
     Xd = transform(M, X)
     Xdv = [Xd[:,i]*Xd[:,i]' for i in 1:rdim]
 
@@ -64,4 +65,20 @@ function _pca_postprocessing(X::AbstractMatrix{T}, rdim::Int=7) where {T<:Abstra
         Xout[:,i] = X[:,i] .- mapreduce(x->x*X[:,i], +, Xdv)
     end
     return Xout
+end
+
+
+# Introduces 0 components into PCA transform to force the number
+# of components be equal to the number of dimensions explicitly
+# specified
+function __handle_pca_dimensions(M::PCA{T}, m) where {T}
+    pcadim = length(M.prinvars)
+    if pcadim < m
+        proj = zeros(T, m, m)
+        proj[:, 1:pcadim] .+= M.proj
+        prinvars = zeros(T, m)
+        prinvars[1:pcadim] .+= M.prinvars
+        M = PCA(M.mean, proj, prinvars, M.tprinvar, M.tvar)
+    end
+    return M
 end
