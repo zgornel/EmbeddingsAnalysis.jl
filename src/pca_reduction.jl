@@ -1,21 +1,21 @@
 """
-    pca_reduction(wv::WordVectors, rdim=7, outdim=size(wv.vectors,1); [pca_transform=true])
+    pca_reduction(wv::WordVectors, rdim=7, outdim=size(wv.vectors,1); [do_pca=true])
 
 Post-processes word embeddings `wv` by removing the first `rdim` PCA components
 from the word vectors and also reduces the dimensionality to `outdim` through
-a subsequent PCA transform, if `pca_transform=true`.
+a subsequent PCA transform, if `do_pca=true`.
 
 # Arguments
   * `wv::WordVectors` the word embeddings
   * `rdim::Int` the number of PCA components to remove from the data
      (default 7)
   * `outdim::Int` the output dimensionality of the data after the PCA
-     dimensionality reduction; it is performed only if `pca_transform=true`
+     dimensionality reduction; it is performed only if `do_pca=true`
      and the default value is the same as that of the input embeddings
      i.e. no reduction
 
 # Keyword arguments
-  * `pca_transform::Bool` whether to perform a PCA transform of the
+  * `do_pca::Bool` whether to perform a PCA transform of the
      post-processed data (default `true`)
 
 # References:
@@ -25,16 +25,17 @@ a subsequent PCA transform, if `pca_transform=true`.
 function pca_reduction(wv::WordVectors{S,T,H},
                        rdim::Int=7,
                        outdim::Int=size(wv.vectors,1);
-                       pca_transform::Bool=true
+                       do_pca::Bool=true
                       ) where {S<:AbstractString, T<:Real, H<:Integer}
 
     # Perform first post-processing
     X = _pca_postprocessing(wv.vectors, rdim)
 
     # Do PCA and post-process again
-    if pca_transform
+    if do_pca
         outdim = clamp(outdim, 1, size(X,1))
-        M = fit(PCA, X, maxoutdim=outdim)
+        pratio = ifelse(size(wv.vectors,1)==outdim, 1.0, 0.99)
+        M = fit(PCA, X, maxoutdim=outdim, pratio=pratio)
         X = transform(M, X)
         X = _pca_postprocessing(X, rdim)
     end
@@ -52,7 +53,7 @@ function _pca_postprocessing(X::AbstractMatrix{T}, rdim::Int=7) where {T<:Abstra
     @debug "Computing PCA components..."
     m, n = size(X)
     rdim = clamp(rdim, 1, m)
-    M = fit(PCA, X, pratio=1., mean=0)
+    M = fit(PCA, X, pratio=1.0, mean=0)
     Xd = transform(M, X)
     Xdv = [Xd[:,i]*Xd[:,i]' for i in 1:rdim]
 

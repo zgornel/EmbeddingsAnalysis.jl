@@ -10,7 +10,8 @@ module EmbeddingsAnalysis
     import Base: dump
 
     export conceptnet2wv,
-           similarity_order
+           similarity_order,
+           pca_reduction
 
     include("dump.jl")
     include("conceptnet2wv.jl")
