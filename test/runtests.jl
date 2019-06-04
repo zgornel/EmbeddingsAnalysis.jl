@@ -9,5 +9,6 @@ using ConceptnetNumberbatch
 include("dump.jl")
 include("conceptnet2wv.jl")
 include("similarity_order.jl")
+include("pca_reduction.jl")
 
 end
