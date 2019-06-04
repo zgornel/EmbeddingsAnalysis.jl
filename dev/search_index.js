@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Processing methods",
     "category": "section",
-    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018"
+    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018\nVikas Raunak \"Simple and effective dimensionality reduction for word embeddings\", NIPS 2017 Workshopand utilities:saving WordVectors objects to disk in either binary or text format\nconvert ConceptNet objects to WordVectors objects"
 },
 
 {
@@ -41,11 +41,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "api/#EmbeddingsAnalysis.pca_reduction-Union{Tuple{WordVectors{S,T,H}}, Tuple{H}, Tuple{T}, Tuple{S}, Tuple{WordVectors{S,T,H},Int64}, Tuple{WordVectors{S,T,H},Int64,Int64}} where H<:Integer where T<:Real where S<:AbstractString",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.pca_reduction",
+    "category": "method",
+    "text": "pca_reduction(wv::WordVectors, rdim=7, outdim=size(wv.vectors,1); [do_pca=true])\n\nPost-processes word embeddings wv by removing the first rdim PCA components from the word vectors and also reduces the dimensionality to outdim through a subsequent PCA transform, if do_pca=true.\n\nArguments\n\nwv::WordVectors the word embeddings\nrdim::Int the number of PCA components to remove from the data  (default 7)\noutdim::Int the output dimensionality of the data after the PCA  dimensionality reduction; it is performed only if do_pca=true  and the default value is the same as that of the input embeddings  i.e. no reduction\n\nKeyword arguments\n\ndo_pca::Bool whether to perform a PCA transform of the  post-processed data (default true)\n\nReferences:\n\nVikas Raunak \"Simple and effective dimensionality reduction for  word embeddings\", NIPS 2017 Workshop\n\n\n\n\n\n"
+},
+
+{
     "location": "api/#EmbeddingsAnalysis.similarity_order-Union{Tuple{WordVectors{S,T,H}}, Tuple{H}, Tuple{T}, Tuple{S}, Tuple{WordVectors{S,T,H},T}} where H<:Integer where T<:Real where S<:AbstractString",
     "page": "API Reference",
     "title": "EmbeddingsAnalysis.similarity_order",
     "category": "method",
-    "text": "similarity_order(wv::WordVectors, alpha=-0.65)\n\nPost-processes the word embeddings wv so that the embeddings capture more information than directly apparent through a linear transformation that adjusts the similarity order of the model. The function returns a new WordVectors object containing the processed embeddings.\n\nReferences:\n\nArtetxe et al. \"Uncovering divergent linguistic information in  word embeddings with lessons for intrinsic and extrinsic evaluation\",  2018\n\n\n\n\n\n"
+    "text": "similarity_order(wv::WordVectors, alpha=-0.65)\n\nPost-processes the word embeddings wv so that the embeddings capture more information than directly apparent through a linear transformation that adjusts the similarity order of the model. The function returns a new WordVectors object containing the processed embeddings.\n\nArguments\n\nwv::WordVectors the word embeddings\n\nalpha::AbstractFloat the α parameter of the algorithm (default -0.65)\n\nReferences:\n\nArtetxe et al. \"Uncovering divergent linguistic information in  word embeddings with lessons for intrinsic and extrinsic evaluation\",  2018\n\n\n\n\n\n"
 },
 
 {
