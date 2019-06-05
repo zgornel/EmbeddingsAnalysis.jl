@@ -61,7 +61,7 @@ var documenterSearchIndex = {"docs": [
     "page": "API Reference",
     "title": "Base.dump",
     "category": "method",
-    "text": "dump(wv::WordVectors, filename [;kind=:binary])\n\nWrites embeddings to disk.\n\nArguments\n\nwv::WordVectors the embeddings\nfilename::AbstractString the embeddings file name\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
+    "text": "dump(filename::AbstractString, wv::WordVectors [;kind=:binary])\n\nWrites embeddings to disk.\n\nArguments\n\nfilename::AbstractString the embeddings file name\nwv::WordVectors the embeddings\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
 },
 
 {
