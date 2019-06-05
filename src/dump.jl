@@ -1,11 +1,11 @@
 """
-    dump(wv::WordVectors, filename [;kind=:binary])
+    dump(filename::AbstractString, wv::WordVectors [;kind=:binary])
 
 Writes embeddings to disk.
 
 # Arguments
-  * `wv::WordVectors` the embeddings
   * `filename::AbstractString` the embeddings file name
+  * `wv::WordVectors` the embeddings
 
 # Keyword arguments
   * `kind::Symbol` specifies whether the embeddings file is textual (`:text`)
