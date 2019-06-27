@@ -5,7 +5,10 @@ module EmbeddingsAnalysis
     using Languages
     using Word2Vec
     using ConceptnetNumberbatch
+    using StatsBase
     using MultivariateStats
+    using Distances
+    using QuantizedArrays
 
     import Base: dump
 
@@ -13,9 +16,11 @@ module EmbeddingsAnalysis
            similarity_order,
            pca_reduction
 
-    include("dump.jl")
-    include("conceptnet2wv.jl")
-    include("similarity_order.jl")
-    include("pca_reduction.jl")
+    include("defaults.jl")          # defaults
+    include("dump.jl")              # save WordVectors to disk
+    include("conceptnet2wv.jl")     # convert ConceptNet to WordVectors
+    include("similarity_order.jl")  # preprocess WordVectors
+    include("pca_reduction.jl")     # preprocess/reduce dimensionality of WordVectors
+    include("cwv.jl")               # CompressedWordVectors
 
 end # module
