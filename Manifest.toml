@@ -204,12 +204,12 @@ deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[QuantizedArrays]]
-deps = ["Clustering", "Distances", "InteractiveUtils", "LinearAlgebra", "StatsBase", "Test"]
-git-tree-sha1 = "3c16598b3f29b4015ad8f10eef8a6af5039e8591"
+deps = ["Clustering", "Distances", "InteractiveUtils", "LinearAlgebra", "StatsBase"]
+git-tree-sha1 = "e835d80f52771e35bfd81c1c6f189c755f031518"
 repo-rev = "master"
 repo-url = "https://github.com/zgornel/QuantizedArrays.jl.git"
 uuid = "a7db621c-8ce0-11e9-16a1-0f86dc86bd10"
-version = "0.1.0"
+version = "0.1.1"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
