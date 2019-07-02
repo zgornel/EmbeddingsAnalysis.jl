@@ -10,18 +10,20 @@ module EmbeddingsAnalysis
     using Distances
     using QuantizedArrays
 
-    import Base: dump, size
+    import Base: size
 
     export conceptnet2wv,
            CompressedWordVectors,
+           compressedwordvectors,
            compress,
+           write2disk,
            similarity_order,
            pca_reduction
 
     include("defaults.jl")          # defaults
-    include("dump.jl")              # save WordVectors to disk
     include("conceptnet2wv.jl")     # convert ConceptNet to WordVectors
     include("cwv.jl")               # CompressedWordVectors
+    include("write2disk.jl")        # save WordVectors to disk
     include("similarity_order.jl")  # preprocess WordVectors
     include("pca_reduction.jl")     # preprocess/reduce dimensionality of WordVectors
 

@@ -9,7 +9,7 @@ using ConceptnetNumberbatch
 using Distances
 using QuantizedArrays
 
-include("dump.jl")
+include("write2disk.jl")
 include("conceptnet2wv.jl")
 include("cwv.jl")
 include("similarity_order.jl")
