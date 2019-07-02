@@ -139,6 +139,58 @@ end
 
 
 """
+    analogy(cwv, pos, neg, n=5)
+
+Compute the analogy similarity between two lists of words. The positions
+and the similarity values of the top `n` similar words will be returned.
+For example,
+`king - man + woman = queen` will be
+`pos=[\"king\", \"woman\"], neg=[\"man\"]`.
+"""
+function analogy(cwv::CompressedWordVectors{Q,U,D,T,S,H},
+                 pos::AbstractArray, neg::AbstractArray, n=5
+                ) where {Q,U,D,T,S,H}
+    m, n_vocab = size(cwv)
+    n_pos = length(pos)
+    n_neg = length(neg)
+    anal_vecs = Matrix{T}(undef, m, n_pos + n_neg)
+
+    for (i, word) in enumerate(pos)
+        anal_vecs[:,i] = get_vector(cwv, word)
+    end
+    for (i, word) in enumerate(neg)
+        anal_vecs[:,i+n_pos] = -get_vector(cwv, word)
+    end
+    mean_vec = mean(anal_vecs, dims=2)
+    metrics = cwv.vectors'*mean_vec
+    top_positions = sortperm(metrics[:], rev = true)[1:n+n_pos+n_neg]
+    for word in [pos;neg]
+        idx = index(cwv, word)
+        loc = findfirst(x->x==idx, top_positions)
+        if loc != nothing
+            splice!(top_positions, loc)
+        end
+    end
+    topn_positions = top_positions[1:n]
+    topn_metrics = metrics[topn_positions]
+    return topn_positions, topn_metrics
+end
+
+
+"""
+    analogy_words(cwv, pos, neg, n=5)
+
+Return the top `n` words computed by analogy similarity between
+positive words `pos` and negaive words `neg`. from the
+CompressedWordVectors `cwv`.
+"""
+function analogy_words(cwv::CompressedWordVectors, pos, neg, n=5)
+    indx, metr = analogy(cwv, pos, neg, n)
+    return vocabulary(cwv)[indx]
+end
+
+
+"""
     compressedwordvectors(filename [,type=Float64][; kind=:text])
 
 Generate a `CompressedWordVectors` type object from a file.

@@ -16,6 +16,7 @@ module EmbeddingsAnalysis
            CompressedWordVectors,
            compressedwordvectors,
            compress,
+           analogy_words,
            write2disk,
            similarity_order,
            pca_reduction
