@@ -11,6 +11,7 @@ module EmbeddingsAnalysis
     using QuantizedArrays
 
     import Base: size
+    import Word2Vec: analogy_words
 
     export conceptnet2wv,
            CompressedWordVectors,
