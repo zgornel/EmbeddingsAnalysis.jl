@@ -1,6 +1,6 @@
 ![Alt text](https://github.com/zgornel/EmbeddingsAnalysis.jl/blob/master/docs/src/assets/logo.png)
 
-A package for processing embeddings. At this point, only word embeddings are _de facto_ supported however other types (i.e. graph embeddings) could be used as well.
+A package for processing embeddings. At this point, only word embeddings are _de facto_ supported.
 
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 [![Build Status](https://travis-ci.org/zgornel/EmbeddingsAnalysis.jl.svg?branch=master)](https://travis-ci.org/zgornel/EmbeddingsAnalysis.jl)
