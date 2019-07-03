@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Processing methods",
     "category": "section",
-    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018\nVikas Raunak \"Simple and effective dimensionality reduction for word embeddings\", NIPS 2017 Workshopand utilities:saving WordVectors objects to disk in either binary or text format\nconvert ConceptNet objects to WordVectors objects"
+    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018\nVikas Raunak \"Simple and effective dimensionality reduction for word embeddings\", NIPS 2017 Workshopand utilities:word vector compression through CompressedWordVectors (uses QuantizedArrays.jl)\nsaving WordVectors, CompressedWordVectors objects to disk in either binary or text format\nconvert ConceptNet objects to WordVectors objects"
 },
 
 {
@@ -30,6 +30,22 @@ var documenterSearchIndex = {"docs": [
     "title": "Installation",
     "category": "section",
     "text": "Installation can be performed from either outside or inside Julia with:$ git clone https://github.com/zgornel/EmbeddingsAnalysis.jlandusing Pkg\nPkg.clone(\"https://github.com/zgornel/EmbeddingsAnalysis.jl\")respectively."
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.compress-Union{Tuple{WordVectors{S,T,H}}, Tuple{H}, Tuple{T}, Tuple{S}} where H where T where S",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.compress",
+    "category": "method",
+    "text": "compress(wv [;kwargs...])\n\nCompresses wv::WordVectors by using array quantization.\n\nKeyword arguments\n\nsampling_ratio::AbstractFloat specifies the percentage of vectors to use\n\nfor quantization codebook creation\n\nk::Int number of quantization values for a codebook\nm::Int number of codebooks to use\nmethod::Symbol specifies the array quantization method\ndistance::PreMetric is the distance\n\nOther keyword arguments specific to the quantization methods can also be provided.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.compressedwordvectors-Union{Tuple{T}, Tuple{AbstractString,Type{T}}} where T<:Real",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.compressedwordvectors",
+    "category": "method",
+    "text": "compressedwordvectors(filename [,type=Float64][; kind=:text])\n\nGenerate a CompressedWordVectors type object from a file.\n\nArguments\n\nfilename::AbstractString the embeddings file name\ntype::Type type of the embedding vector elements; default Float64\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :text\n\n\n\n\n\n"
 },
 
 {
@@ -57,11 +73,99 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "api/#Base.dump-Union{Tuple{H}, Tuple{T}, Tuple{S}, Tuple{IO,WordVectors{S,T,H}}} where H<:Integer where T<:Real where S<:AbstractString",
+    "location": "api/#EmbeddingsAnalysis.write2disk-Union{Tuple{H}, Tuple{S}, Tuple{T}, Tuple{D}, Tuple{U}, Tuple{Q}, Tuple{IO,CompressedWordVectors{Q,U,D,T,S,H}}} where H where S where T where D where U where Q",
     "page": "API Reference",
-    "title": "Base.dump",
+    "title": "EmbeddingsAnalysis.write2disk",
     "category": "method",
-    "text": "dump(filename::AbstractString, wv::WordVectors [;kind=:binary])\n\nWrites embeddings to disk.\n\nArguments\n\nfilename::AbstractString the embeddings file name\nwv::WordVectors the embeddings\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
+    "text": "write2disk(filename::AbstractString, wv::CompressedWordVectors [;kind=:binary])\n\nWrites compressed embeddings to disk.\n\nArguments\n\nfilename::AbstractString the embeddings file name\nwv::CompressedWordVectors the embeddings\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.write2disk-Union{Tuple{H}, Tuple{T}, Tuple{S}, Tuple{IO,WordVectors{S,T,H}}} where H<:Integer where T<:Real where S<:AbstractString",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.write2disk",
+    "category": "method",
+    "text": "write2disk(filename::AbstractString, wv::WordVectors [;kind=:binary])\n\nWrites embeddings to disk.\n\nArguments\n\nfilename::AbstractString the embeddings file name\nwv::WordVectors the embeddings\n\nKeyword arguments\n\nkind::Symbol specifies whether the embeddings file is textual (:text)\n\nor binary (:binary); default :binary\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#Word2Vec.analogy_words",
+    "page": "API Reference",
+    "title": "Word2Vec.analogy_words",
+    "category": "function",
+    "text": "analogy_words(cwv, pos, neg, n=5)\n\nReturn the top n words computed by analogy similarity between positive words pos and negaive words neg. from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#Base.size-Tuple{CompressedWordVectors}",
+    "page": "API Reference",
+    "title": "Base.size",
+    "category": "method",
+    "text": "size(cwv)\n\nReturn the word vector length and the number of words as a tuple.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.analogy-Union{Tuple{H}, Tuple{S}, Tuple{T}, Tuple{D}, Tuple{U}, Tuple{Q}, Tuple{CompressedWordVectors{Q,U,D,T,S,H},AbstractArray,AbstractArray}, Tuple{CompressedWordVectors{Q,U,D,T,S,H},AbstractArray,AbstractArray,Any}} where H where S where T where D where U where Q",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.analogy",
+    "category": "method",
+    "text": "analogy(cwv, pos, neg, n=5)\n\nCompute the analogy similarity between two lists of words. The positions and the similarity values of the top n similar words will be returned. For example, king - man + woman = queen will be pos=[\"king\", \"woman\"], neg=[\"man\"].\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.cosine",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.cosine",
+    "category": "function",
+    "text": "cosine(cwv, word, n=10)\n\nReturn the position of n (by default n = 10) neighbors of word and their cosine similarities.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.cosine_similar_words",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.cosine_similar_words",
+    "category": "function",
+    "text": "cosine_similar_words(cwv, word, n=10)\n\nReturn the top n (by default n = 10) most similar words to word from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.get_vector-Tuple{CompressedWordVectors,Any}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.get_vector",
+    "category": "method",
+    "text": "get_vector(cwv, word)\n\nReturn the vector representation of word from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.in_vocabulary-Tuple{CompressedWordVectors,AbstractString}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.in_vocabulary",
+    "category": "method",
+    "text": "in_vocabulary(cwv, word)\n\nReturn true if word is part of the vocabulary of the CompressedWordVector cwv and false otherwise.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.index-Tuple{CompressedWordVectors,Any}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.index",
+    "category": "method",
+    "text": "index(cwv, word)\n\nReturn the index of word from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.similarity-Tuple{CompressedWordVectors,Any,Any}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.similarity",
+    "category": "method",
+    "text": "similarity(cwv, word1, word2)\n\nReturn the cosine similarity value between two words word1 and word2.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.vocabulary-Tuple{CompressedWordVectors}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.vocabulary",
+    "category": "method",
+    "text": "vocabulary(cwv)\n\nReturn the vocabulary as a vector of words of the CompressedWordVectors cwv.\n\n\n\n\n\n"
 },
 
 {
