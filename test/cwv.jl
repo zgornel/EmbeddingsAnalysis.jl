@@ -22,5 +22,13 @@
     @test EmbeddingsAnalysis.get_vector(cwv, word) == cwv.vectors[:, idx]
     @test EmbeddingsAnalysis.similarity(cwv, word, word) ==
             cwv.vectors[:,idx]' * cwv.vectors[:,idx]
-    # no test for `cosine`, `cosine_similar_words`
+
+    n=3
+    csw = EmbeddingsAnalysis.cosine_similar_words(cwv, vocab[1], n)
+    @test csw isa Vector{String}
+    @test length(csw) == n
+    aw = EmbeddingsAnalysis.analogy_words(cwv, [vocab[1]], [], n)
+    @test aw isa Vector{String}
+    @test length(aw) == n
+
 end
