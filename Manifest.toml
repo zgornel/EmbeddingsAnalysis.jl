@@ -64,10 +64,10 @@ uuid = "6bdbf80b-0969-53f9-8443-f41591bd656e"
 version = "0.1.5"
 
 [[DataStructures]]
-deps = ["InteractiveUtils", "OrderedCollections", "Random", "Serialization", "Test"]
-git-tree-sha1 = "ca971f03e146cf144a9e2f2ce59674f5bf0e8038"
+deps = ["InteractiveUtils", "OrderedCollections"]
+git-tree-sha1 = "0809951a1774dc724da22d26e4289bbaab77809a"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.15.0"
+version = "0.17.0"
 
 [[Dates]]
 deps = ["Printf"]
@@ -169,9 +169,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[QuantizedArrays]]
 deps = ["Clustering", "Distances", "InteractiveUtils", "LinearAlgebra", "StatsBase"]
-git-tree-sha1 = "e835d80f52771e35bfd81c1c6f189c755f031518"
+git-tree-sha1 = "b95c21c878396f5d574a0374daebe2a91d267f3e"
 uuid = "a7db621c-8ce0-11e9-16a1-0f86dc86bd10"
-version = "0.1.1"
+version = "0.1.2"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
