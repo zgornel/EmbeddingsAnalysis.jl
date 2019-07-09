@@ -261,8 +261,7 @@ function _from_binary(::Type{T}, filename::AbstractString) where T<:Real
 end
 
 # Generate a WordVectors object from text file
-function _from_text(::Type{T}, filename::AbstractString, normalize::Bool=true,
-                    fasttext::Bool=false) where T<:Real
+function _from_text(::Type{T}, filename::AbstractString) where T<:Real
     open(filename) do f
         nrows, vocab_size = map(x -> parse(Int, x), split(readline(f), ' '))
         d, k, m = map(x -> parse(Int, x), split(readline(f), ' '))
