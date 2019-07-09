@@ -249,7 +249,7 @@ function _from_binary(::Type{T}, filename::AbstractString) where T<:Real
             codes = collect(reinterpret(U, read(f, codes_length)))
             vectors = zeros(T, d, k)
             for j in 1:d
-                vectors[j,:] = reinterpret(T, read(f, codevecs_length))
+                vectors[j,:] = T.(reinterpret(T0, read(f, codevecs_length)))
             end
             cbooks[i] = CodeBook(codes, vectors)
         end
