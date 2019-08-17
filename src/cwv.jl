@@ -222,23 +222,23 @@ compressedwordvectors(filename::AbstractString; kind::Symbol=:text) =
 
 # Generate a WordVectors object from binary file
 function _from_binary(::Type{T}, filename::AbstractString) where T<:Real
-    open(filename) do f
-        nrows, vocab_size = map(x -> parse(Int, x), split(readline(f), ' '))
-        d, k, m = map(x -> parse(Int, x), split(readline(f), ' '))
-        _module, _val = split(readline(f), ".")
+    open(filename) do fid
+        nrows, vocab_size = map(x -> parse(Int, x), split(readline(fid), ' '))
+        d, k, m = map(x -> parse(Int, x), split(readline(fid), ' '))
+        _module, _val = split(readline(fid), ".")
         Q = eval(Expr(:., Symbol(_module), QuoteNode(Symbol(_val))))
-        _module, _val = split(readline(f), ".")
+        _module, _val = split(readline(fid), ".")
         D = eval(Expr(:., Symbol(_module), QuoteNode(Symbol(_val))))
-        U = eval(Symbol(readline(f)))
-        T0 = eval(Symbol(readline(f)))
+        U = eval(Symbol(readline(fid)))
+        T0 = eval(Symbol(readline(fid)))
 
         # Read vocabulary and compressed data
         vocab = Vector{String}(undef, vocab_size)
         data = zeros(U, m, vocab_size)
         binary_length = sizeof(U) * m
         for i in 1:vocab_size
-            vocab[i] = strip(readuntil(f, ' '))
-            data[:,i] = collect(reinterpret(U, read(f, binary_length)))
+            vocab[i] = strip(readuntil(fid, ' '))
+            data[:,i] = collect(reinterpret(U, read(fid, binary_length)))
         end
 
         # Read codebooks
@@ -246,15 +246,19 @@ function _from_binary(::Type{T}, filename::AbstractString) where T<:Real
         codes_length = sizeof(U) * k
         codevecs_length = sizeof(T0) * k
         for i = 1:m
-            codes = collect(reinterpret(U, read(f, codes_length)))
+            codes = collect(reinterpret(U, read(fid, codes_length)))
             vectors = zeros(T, d, k)
             for j in 1:d
-                vectors[j,:] = T.(reinterpret(T0, read(f, codevecs_length)))
+                vectors[j,:] = T.(reinterpret(T0, read(fid, codevecs_length)))
             end
             cbooks[i] = CodeBook(codes, vectors)
         end
-
-        quantizer = ArrayQuantizer(Q(), (nrows, vocab_size), cbooks, k, D())
+        rotmat = Matrix{T}(undef, nrows, nrows)
+        binary_length = sizeof(T) * nrows
+        for i in 1:nrows
+            rotmat[:,i] = collect(reinterpret(T, read(fid, binary_length)))
+        end
+        quantizer = ArrayQuantizer(Q(), (nrows, vocab_size), cbooks, k, D(), rotmat)
         qa = QuantizedArray(quantizer, data)
         return CompressedWordVectors(vocab, qa)
     end
@@ -262,21 +266,21 @@ end
 
 # Generate a WordVectors object from text file
 function _from_text(::Type{T}, filename::AbstractString) where T<:Real
-    open(filename) do f
-        nrows, vocab_size = map(x -> parse(Int, x), split(readline(f), ' '))
-        d, k, m = map(x -> parse(Int, x), split(readline(f), ' '))
-        _module, _val = split(readline(f), ".")
+    open(filename) do fid
+        nrows, vocab_size = map(x -> parse(Int, x), split(readline(fid), ' '))
+        d, k, m = map(x -> parse(Int, x), split(readline(fid), ' '))
+        _module, _val = split(readline(fid), ".")
         Q = eval(Expr(:., Symbol(_module), QuoteNode(Symbol(_val))))
-        _module, _val = split(readline(f), ".")
+        _module, _val = split(readline(fid), ".")
         D = eval(Expr(:., Symbol(_module), QuoteNode(Symbol(_val))))
-        U = eval(Symbol(readline(f)))
-        T0 = eval(Symbol(readline(f)))
+        U = eval(Symbol(readline(fid)))
+        T0 = eval(Symbol(readline(fid)))
 
         # Read vocabulary and compressed data
         vocab = Vector{String}(undef, vocab_size)
         data = zeros(U, m, vocab_size)
         for i in 1:vocab_size
-            line = readline(f)
+            line = readline(fid)
             parts = split(line, ' ')
             vocab[i] = parts[1]
             data[:,i] = map(x->parse(U, x), parts[2:end])
@@ -285,15 +289,18 @@ function _from_text(::Type{T}, filename::AbstractString) where T<:Real
         # Read codebooks
         cbooks = Vector{CodeBook{U,T}}(undef, m)
         for i = 1:m
-            codes = map(x->parse(U, x), split(readline(f),' '))
+            codes = map(x->parse(U, x), split(readline(fid),' '))
             vectors = zeros(T, d, k)
             for j in 1:d
-                vectors[j,:] = map(x->parse(T, x), split(readline(f), ' '))
+                vectors[j,:] = map(x->parse(T, x), split(readline(fid), ' '))
             end
             cbooks[i] = CodeBook(codes, vectors)
         end
-
-        quantizer = ArrayQuantizer(Q(), (nrows, vocab_size), cbooks, k, D())
+        rotmat = Matrix{T}(undef, nrows, nrows)
+        for i in 1:nrows
+            rotmat[:,i] = map(x->parse(T, x), split(readline(fid), ' '))
+        end
+        quantizer = ArrayQuantizer(Q(), (nrows, vocab_size), cbooks, k, D(), rotmat)
         qa = QuantizedArray(quantizer, data)
         return CompressedWordVectors(vocab, qa)
     end

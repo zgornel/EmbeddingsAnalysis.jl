@@ -124,6 +124,9 @@ function _write2disk_binary(fid::IO,
             write(fid, cwv.vectors.quantizer.codebooks[i].vectors[j,:])
         end
     end
+    for i in 1:nrows  # rotation matrix
+        write(fid, cwv.vectors.quantizer.rot[:,i])
+    end
 end
 
 function _write2disk_text(fid::IO,
@@ -161,5 +164,9 @@ function _write2disk_text(fid::IO,
             nstr2 = join(map(string, cwv.vectors.quantizer.codebooks[i].vectors[j,:]), " ")
             println(fid, "$nstr2")
         end
+    end
+    for i in 1:nrows  # rotation matrix
+        nstr = join(map(string, cwv.vectors.quantizer.rot[:,i]), " ")
+        println(fid, "$nstr")
     end
 end
