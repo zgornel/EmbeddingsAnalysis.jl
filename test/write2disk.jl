@@ -43,6 +43,8 @@ end
             @test typeof(wv_compressed) == typeof(wv_loaded)
             @test all(wv_compressed.vectors.data .==
                       wv_loaded.vectors.data)
+            @test wv_compressed.vectors.quantizer.rot ==
+                wv_loaded.vectors.quantizer.rot
         end
     end
 end
