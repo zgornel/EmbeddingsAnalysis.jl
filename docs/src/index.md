@@ -15,6 +15,7 @@ and utilities:
   - saving `WordVectors`, `CompressedWordVectors` objects to disk in either binary or text format
   - convert `ConceptNet` objects to `WordVectors` objects
   - selection of a subset of word vectors starting from a seed vocabulary
+  - simple word vector based translation (requires aligned embeddings)
 
 ## Installation
 

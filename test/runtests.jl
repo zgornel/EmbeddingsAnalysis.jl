@@ -16,5 +16,6 @@ include("cwv.jl")
 include("similarity_order.jl")
 include("pca_reduction.jl")
 include("vocab_reduction.jl")
+include("translator.jl")
 
 end

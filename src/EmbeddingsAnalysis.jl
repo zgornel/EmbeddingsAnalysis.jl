@@ -26,7 +26,8 @@ module EmbeddingsAnalysis
            write2disk,
            similarity_order,
            pca_reduction,
-           vocab_reduction
+           vocab_reduction,
+           translate
 
     include("defaults.jl")          # defaults
     include("utils.jl")             # useful utilities
@@ -36,5 +37,6 @@ module EmbeddingsAnalysis
     include("similarity_order.jl")  # preprocess WordVectors
     include("pca_reduction.jl")     # preprocess/reduce dimensionality of WordVectors
     include("vocab_reduction.jl")   # reduce vocabulary size of WordVectors using a seed vocabulary
+    include("translator.jl")        # word-vector based translation
 
 end # module
