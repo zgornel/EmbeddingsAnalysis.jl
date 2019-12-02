@@ -13,7 +13,8 @@ module EmbeddingsAnalysis
     import Base: size
     import Word2Vec: analogy_words,
                      WordVectors,
-                     get_vector
+                     get_vector,
+                     vocabulary
 
     export WordVectors,
            get_vector,
@@ -23,6 +24,7 @@ module EmbeddingsAnalysis
            compressedwordvectors,
            compress,
            analogy_words,
+           vocabulary,
            write2disk,
            similarity_order,
            pca_reduction,
