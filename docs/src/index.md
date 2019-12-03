@@ -4,7 +4,7 @@ CurrentModule=EmbeddingsAnalysis
 
 # Introduction
 
-EmbeddingsAnalysis is a package for processing embeddings. At this point, only word embeddings are _de facto_ supported however other types (i.e. graph embeddings) could be used as well.
+EmbeddingsAnalysis is a package containing algorithms and utilities for embeddings processing. At this point, only word embeddings are _de facto_ supported however other types (i.e. graph embeddings) could be used as well.
 
 ## Processing methods
 The package implements the following embeddings processing algorithms:
@@ -14,6 +14,8 @@ and utilities:
   - word vector compression through `CompressedWordVectors` (uses [QuantizedArrays.jl](https://github.com/zgornel/QuantizedArrays.jl))
   - saving `WordVectors`, `CompressedWordVectors` objects to disk in either binary or text format
   - convert `ConceptNet` objects to `WordVectors` objects
+  - selection of a subset of word vectors starting from a seed vocabulary
+  - simple word vector based translation (requires aligned embeddings)
 
 ## Installation
 
