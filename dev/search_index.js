@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Introduction",
     "category": "section",
-    "text": "EmbeddingsAnalysis is a package for processing embeddings. At this point, only word embeddings are de facto supported however other types (i.e. graph embeddings) could be used as well."
+    "text": "EmbeddingsAnalysis is a package containing algorithms and utilities for embeddings processing. At this point, only word embeddings are de facto supported however other types (i.e. graph embeddings) could be used as well."
 },
 
 {
@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Processing methods",
     "category": "section",
-    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018\nVikas Raunak \"Simple and effective dimensionality reduction for word embeddings\", NIPS 2017 Workshopand utilities:word vector compression through CompressedWordVectors (uses QuantizedArrays.jl)\nsaving WordVectors, CompressedWordVectors objects to disk in either binary or text format\nconvert ConceptNet objects to WordVectors objects"
+    "text": "The package implements the following embeddings processing algorithms:Artetxe et al. \"Uncovering divergent linguistic information in word embeddings with lessons for intrinsic and extrinsic evaluation\", 2018\nVikas Raunak \"Simple and effective dimensionality reduction for word embeddings\", NIPS 2017 Workshopand utilities:word vector compression through CompressedWordVectors (uses QuantizedArrays.jl)\nsaving WordVectors, CompressedWordVectors objects to disk in either binary or text format\nconvert ConceptNet objects to WordVectors objects\nselection of a subset of word vectors starting from a seed vocabulary\nsimple word vector based translation (requires aligned embeddings)"
 },
 
 {
@@ -57,6 +57,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "api/#EmbeddingsAnalysis.cosine_vec",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.cosine_vec",
+    "category": "function",
+    "text": "cosine_vec(wv::WordVectors, wordvector, n=10 [;vocab=nothing])\n\nCompute the cosine similarities and return best n positions and calculated values between wordvector and the word vectors from wv. A vocabulary mask vocab can be specified to consider only a subset of word vectors.\n\n\n\n\n\n"
+},
+
+{
     "location": "api/#EmbeddingsAnalysis.pca_reduction-Union{Tuple{WordVectors{S,T,H}}, Tuple{H}, Tuple{T}, Tuple{S}, Tuple{WordVectors{S,T,H},Int64}, Tuple{WordVectors{S,T,H},Int64,Int64}} where H<:Integer where T<:Real where S<:AbstractString",
     "page": "API Reference",
     "title": "EmbeddingsAnalysis.pca_reduction",
@@ -70,6 +78,14 @@ var documenterSearchIndex = {"docs": [
     "title": "EmbeddingsAnalysis.similarity_order",
     "category": "method",
     "text": "similarity_order(wv::WordVectors, alpha=-0.65)\n\nPost-processes the word embeddings wv so that the embeddings capture more information than directly apparent through a linear transformation that adjusts the similarity order of the model. The function returns a new WordVectors object containing the processed embeddings.\n\nArguments\n\nwv::WordVectors the word embeddings\n\nalpha::AbstractFloat the α parameter of the algorithm (default -0.65)\n\nReferences:\n\nArtetxe et al. \"Uncovering divergent linguistic information in  word embeddings with lessons for intrinsic and extrinsic evaluation\",  2018\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#EmbeddingsAnalysis.vocab_reduction-Tuple{WordVectors,Any,Any}",
+    "page": "API Reference",
+    "title": "EmbeddingsAnalysis.vocab_reduction",
+    "category": "method",
+    "text": "vocab_reduction(wv::WordVectors, seed, nn)\n\nProduces a reduced vocabulary version of wv by removing all but the nn nearest neighbors of each word present in the vocabulary seed.\n\n\n\n\n\n"
 },
 
 {
@@ -94,6 +110,22 @@ var documenterSearchIndex = {"docs": [
     "title": "Word2Vec.analogy_words",
     "category": "function",
     "text": "analogy_words(cwv, pos, neg, n=5)\n\nReturn the top n words computed by analogy similarity between positive words pos and negaive words neg. from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#Word2Vec.get_vector-Tuple{CompressedWordVectors,Any}",
+    "page": "API Reference",
+    "title": "Word2Vec.get_vector",
+    "category": "method",
+    "text": "get_vector(cwv, word)\n\nReturn the vector representation of word from the CompressedWordVectors cwv.\n\n\n\n\n\n"
+},
+
+{
+    "location": "api/#Word2Vec.vocabulary-Tuple{CompressedWordVectors}",
+    "page": "API Reference",
+    "title": "Word2Vec.vocabulary",
+    "category": "method",
+    "text": "vocabulary(cwv)\n\nReturn the vocabulary as a vector of words of the CompressedWordVectors cwv.\n\n\n\n\n\n"
 },
 
 {
@@ -129,14 +161,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "api/#EmbeddingsAnalysis.get_vector-Tuple{CompressedWordVectors,Any}",
-    "page": "API Reference",
-    "title": "EmbeddingsAnalysis.get_vector",
-    "category": "method",
-    "text": "get_vector(cwv, word)\n\nReturn the vector representation of word from the CompressedWordVectors cwv.\n\n\n\n\n\n"
-},
-
-{
     "location": "api/#EmbeddingsAnalysis.in_vocabulary-Tuple{CompressedWordVectors,AbstractString}",
     "page": "API Reference",
     "title": "EmbeddingsAnalysis.in_vocabulary",
@@ -158,14 +182,6 @@ var documenterSearchIndex = {"docs": [
     "title": "EmbeddingsAnalysis.similarity",
     "category": "method",
     "text": "similarity(cwv, word1, word2)\n\nReturn the cosine similarity value between two words word1 and word2.\n\n\n\n\n\n"
-},
-
-{
-    "location": "api/#EmbeddingsAnalysis.vocabulary-Tuple{CompressedWordVectors}",
-    "page": "API Reference",
-    "title": "EmbeddingsAnalysis.vocabulary",
-    "category": "method",
-    "text": "vocabulary(cwv)\n\nReturn the vocabulary as a vector of words of the CompressedWordVectors cwv.\n\n\n\n\n\n"
 },
 
 {
